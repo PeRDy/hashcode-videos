@@ -81,6 +81,11 @@ class Solution(Individual):
 
     @staticmethod
     def _get_cache_row_data(cache_row):
+
+        # If sum of row is 0, then there is no video for that cache (cache not used)
+        if cache_row.sum() == 0:
+            return []
+
         line_data = []
         for col_id in range(len(cache_row)):
             col_val = cache_row[col_id]
@@ -100,4 +105,3 @@ class SolutionSet(Population):
     def __init__(self, problem, size, *args, **kwargs):
         self.problem = problem
         self.individuals = [Solution.random(problem) for _ in range(size)]
-
