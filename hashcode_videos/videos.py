@@ -1,3 +1,5 @@
+from random import randint
+
 from hashcode_videos.genetic import Individual, Population
 
 
@@ -21,9 +23,22 @@ class Solution(Individual):
         for i in range(nth):
             solution.mutate()
 
+    @property
+    def is_valid(self):
+        cache_size = (self.cache * self.problem.video_size.T).sum(1)
+        cache_diff = self.problem.cache_size - cache_size
+        return any(cache_diff[cache_diff < 0])
+
     def mutate(self):
-        # Randomly modify current solution
-        pass
+        valid = False
+        while not valid:
+            x = randint(0, self.cache.shape[0])
+            y = randint(0, self.cache.shape[1])
+            self.cache[x, y] = int(not(self.cache[x, y]))
+            valid = self.is_valid
+
+            if not valid:
+                self.cache[x, y] = int(not(self.cache[x, y]))
 
     def breed(self, mother: 'Individual') -> 'Individual':
         # Mix two solutions
