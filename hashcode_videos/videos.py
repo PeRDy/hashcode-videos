@@ -62,16 +62,14 @@ class Solution(Individual):
         cache_used_len = 0
 
         # Each of the subsequent N lines should describe the videos cached in a single cache server
-        for row_id in range(len(self.cache)):
-            row = self.cache[row_id]
-
+        for idx, row in enumerate(self.cache):
             # ID of the cache server being described, the IDs of the videos stored in this cache server
             line_data = self._get_cache_row_data(row)
 
             if len(line_data) > 0:
                 # Sum 1 to num of caches used and prepend cache id
                 cache_used_len += 1
-                line_data.insert(0, str(row_id))
+                line_data.insert(0, str(idx))
                 output_str += self._new_str_line(line_data)
 
         # Line containing a single number N - the number of cache server descriptions to follow
@@ -86,13 +84,8 @@ class Solution(Individual):
         if cache_row.sum() == 0:
             return []
 
-        line_data = []
-        for col_id in range(len(cache_row)):
-            col_val = cache_row[col_id]
-
-            # Add video id
-            if col_val == 1:
-                line_data.append(str(col_id))
+        # Get videos ids in cache
+        line_data = [str(idx) for idx, val in enumerate(cache_row) if val == 1]
 
         return line_data
 
