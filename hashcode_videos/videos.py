@@ -42,7 +42,13 @@ class Solution(Individual):
 
     def breed(self, mother: 'Individual') -> 'Individual':
         # Mix two solutions
-        pass
+        father_sol = self.cache
+        mother_sol = mother.cache
+
+        father_sol[::2] = 0
+        mother_sol[1::2] = 0
+
+        return Solution(self.problem, father_sol + mother_sol)
 
     def fitness(self) -> float:
         # Current score
