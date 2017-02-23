@@ -5,7 +5,7 @@ import datetime
 import numpy as np
 
 from hashcode_videos.base_app import BaseApp
-from hashcode_videos.videos import Problem
+from hashcode_videos.videos import Problem, SolutionSet
 
 
 class App(BaseApp):
@@ -48,18 +48,17 @@ class App(BaseApp):
 
     def run(self, *args, **kwargs):
         problem = self.read_file(self.args['input'])
-        # solution = SolutionSet(pizza, self.args['population'])
+        solution = SolutionSet(problem, self.args['population'])
         before = datetime.datetime.now()
         try:
-            import ipdb; ipdb.sset_trace()
-            # solution.run(**self.args)
+            solution.run(**self.args)
         except KeyboardInterrupt:
             self.logger.info('Interrupted')
         finally:
             after = datetime.datetime.now()
             self.logger.debug('Time: %ss.', (after - before).total_seconds())
-            # self.logger.info(repr(solution.best))
+            self.logger.info(repr(solution.best))
 
-            # with open(self.args['output'], 'w') as f:
-            #     f.write(str(solution.best))
+            with open(self.args['output'], 'w') as f:
+                f.write(str(solution.best))
 
