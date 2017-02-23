@@ -101,14 +101,3 @@ class SolutionSet(Population):
         self.problem = problem
         self.individuals = [Solution.random(problem) for _ in range(size)]
 
-
-if __name__ == '__main__':
-    import numpy
-    zer = numpy.zeros((3, 5))
-    zer[0][2] = 1
-    zer[1][3] = 1
-    zer[1][1] = 1
-    zer[2][0] = 1
-    zer[2][1] = 1
-    oc = Solution(None, zer)
-    print(str(oc))
